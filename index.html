@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular JS Filters</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+</head>
+
+<body style="text-align: center">
+<h2>AngularJS Sample Dropdown & Search</h2>
+<div ng-app = "mainApp" ng-controller = "studentController">
+
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search Anything" ng-model="q">
+    </div>
+
+    <br>
+
+    <select class="form-control" ng-model="selectOrder" ng-change="changeOrder()">
+        <option style="display:none" value="">select a type</option>
+        <option>By Name</option>
+        <option>By Marks</option>
+    </select>
+
+    <div ng-repeat="student in student.subjects | filter: q | orderBy: selectedOrder ">
+        <p>{{ student.name }}, {{ student.marks }}</p>
+    </div>
+</div>
+
+<script>
+    var mainApp = angular.module("mainApp", []);
+
+    mainApp.controller('studentController', function($scope) {
+
+        $scope.student = {
+            firstName: "Mahesh",
+            lastName: "Parashar",
+            fees:500,
+
+            subjects:[
+                {name:'Physics',marks:70},
+                {name:'Chemistry',marks:80},
+                {name:'Math',marks:65}
+            ]
+        };
+
+        $scope.changeOrder = function(){
+            if($scope.selectOrder == 'By Name') $scope.selectedOrder = 'name';
+            if($scope.selectOrder == 'By Marks') $scope.selectedOrder = 'marks';
+        }
+    });
+</script>
+
+</body>
+</html>
